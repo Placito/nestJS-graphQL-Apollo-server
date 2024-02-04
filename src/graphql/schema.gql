@@ -10,7 +10,7 @@ type UserSetting {
 
 type User {
   id: Int!
-  firstName: String
+  firstName: String!
   lastName: String
   settings: UserSetting
 }
@@ -18,4 +18,8 @@ type User {
 type Query {
   getUserById(id: Int!): User
   getAllUsers: [User!]!
+}
+
+type Mutation {
+  createUser(firstName: String!, lastName: String): User!
 }

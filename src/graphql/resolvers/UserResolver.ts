@@ -5,6 +5,7 @@ import {
   Int,
   ResolveField,
   Parent,
+  Mutation,
 } from '@nestjs/graphql';
 import { User } from '../models/User';
 import { mockUsers } from 'src/__mocks__/mockUsers';
@@ -26,5 +27,18 @@ export class UserResolver {
   @ResolveField((returns) => UserSetting, { name: 'settings', nullable: true }) // A field resolver is a function that provides the value for a specific field in a GraphQL type. We set the name to 'settings' so getUserSettings doesn't appear in the schema.gpl
   getUserSettings(@Parent() user: User) {
     return mockUserSettings.find((setting) => setting.userId === user.id);
+  }
+  @Mutation((returns) => User)
+  createUser(
+    @Args('firstName') firstName: string,
+    @Args('lastName', { nullable: true }) lastName: string,
+  ) {
+    const newUser = {
+      id: mockUsers.length + 1,
+      firstName,
+      lastName,
+    };
+    mockUsers.push(newUser);
+    return newUser;
   }
 }
