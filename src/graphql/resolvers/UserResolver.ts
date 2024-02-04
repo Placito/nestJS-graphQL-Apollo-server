@@ -11,6 +11,7 @@ import { User } from '../models/User';
 import { mockUsers } from 'src/__mocks__/mockUsers';
 import { UserSetting } from '../models/UserSetting';
 import { mockUserSettings } from 'src/__mocks__/mockUserSettings';
+import { CreateUserInput } from '../utils/CreateUserInput';
 
 @Resolver((of: User) => User) // This tells that 'User' is the parent
 export class UserResolver {
@@ -29,10 +30,8 @@ export class UserResolver {
     return mockUserSettings.find((setting) => setting.userId === user.id);
   }
   @Mutation((returns) => User)
-  createUser(
-    @Args('firstName') firstName: string,
-    @Args('lastName', { nullable: true }) lastName: string,
-  ) {
+  createUser(@Args('createUserData') createUserData: CreateUserInput) {
+    const { firstName, lastName } = createUserData;
     const newUser = {
       id: mockUsers.length + 1,
       firstName,
