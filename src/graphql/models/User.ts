@@ -1,8 +1,9 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { UserSetting } from './UserSetting';
 
 @ObjectType()
 export class User {
-  @Field(() => Int)
+  @Field((type) => Int)
   id: number;
 
   @Field({ nullable: true })
@@ -10,11 +11,7 @@ export class User {
 
   @Field({ nullable: true })
   lastName?: string;
-}
 
-// This object will generate this graphQL type:
-// type Author {
-//     id: Int!
-//     firstName: String
-//     lastName: String
-//   }
+  @Field({ nullable: true })
+  settings?: UserSetting;
+}
